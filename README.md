@@ -57,3 +57,7 @@ doc link : https://v5.reactrouter.com/web/guides/quick-start
 ### authentication
 doc : https://firebase.google.com/docs/auth
 firebase 인증을 사용하려면 `import firebase/auth`를 해주어야 함
+* `setPersistence` : 사용자를 어떻게 기억할 것인지 정함
+* `onAuthStateChanged` : firebase가 작동할때까지 브라우저가 기다려주지 않으니까... 얘를 사용해서 체크
+* login 파트 다시 볼 것 `prev => !prev`로 `setNewAccount`내의 로직 바꾸는 내용 익숙해지기....
+* 후기: 와 재밌다... 로그인 구현이 세상에서 제일 재밌어~~~

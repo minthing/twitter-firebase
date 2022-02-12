@@ -53,3 +53,7 @@ doc link : https://v5.reactrouter.com/web/guides/quick-start
 ##### issue
 * 에러났을 땐 껐다 키자 그냥... 재실행 안됨
 * 각 컴포넌트에 `return` 잊지 말고 넣어주기
+
+### authentication
+doc : https://firebase.google.com/docs/auth
+firebase 인증을 사용하려면 `import firebase/auth`를 해주어야 함

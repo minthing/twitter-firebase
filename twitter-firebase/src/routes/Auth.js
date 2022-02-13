@@ -25,7 +25,7 @@ const Auth =  () => {
       }else{
         data = await authService.signInWithEmailAndPassword(email, password)
       }
-      console.log(data);
+      // console.log(data);
     }catch(error){
       setError(error.message)
     }
@@ -34,7 +34,7 @@ const Auth =  () => {
     setNewAccount(prev => !prev)
   }
   const onSocialClick = async (event) => {
-    console.log(event.target.name)
+    // console.log(event.target.name)
     const {target: {name}} = event;
     let provider
     if(name === "google"){
@@ -43,7 +43,7 @@ const Auth =  () => {
       provider = new firebaseInstance.auth.GithubAuthProvider();
     }
     let data = await authService.signInWithPopup(provider)
-    console.log(data)
+    // console.log(data)
   }
   return(
     <div>

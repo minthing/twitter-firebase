@@ -61,3 +61,23 @@ firebase 인증을 사용하려면 `import firebase/auth`를 해주어야 함
 * `onAuthStateChanged` : firebase가 작동할때까지 브라우저가 기다려주지 않으니까... 얘를 사용해서 체크
 * login 파트 다시 볼 것 `prev => !prev`로 `setNewAccount`내의 로직 바꾸는 내용 익숙해지기....
 * 후기: 와 재밌다... 로그인 구현이 세상에서 제일 재밌어~~~
+
+### database
+* cloud firebase는 No SQL database이다.
+
+##### javascript map
+```javascript
+const array1 = [1, 4, 9, 16];
+// pass a function to map
+const map1 = array1.map(x => x * 2);
+console.log(map1);
+// expected output: Array [2, 8, 18, 32]
+```
+
+##### 이슈
+```javascript
+{tweets.map(data => 
+  {<div key={data.id}><p>{data.tweet}</p></div>} 
+  //{} 중괄호로 감싸니까 못읽음... 안되나봄...()는 됨...
+)}
+```

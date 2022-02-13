@@ -29,12 +29,16 @@ const Home = ({userObject}) => {
 
   const onSubmit= async (event) => {
     event.preventDefault();
-    await dbService.collection("tweets").add({
-      text:tweet,
-      createdAt:Date.now(),
-      createUser:userObject.uid
-    })
-    setTweet("");
+    if(tweet !== ""){
+      await dbService.collection("tweets").add({
+        text:tweet,
+        createdAt:Date.now(),
+        createUser:userObject.uid
+      })
+      setTweet("");
+    }else{
+      window.alert("tweet을 입력해 주세요!")
+    }
   }
 
   const onChange = (event) => {

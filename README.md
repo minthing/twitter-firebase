@@ -82,3 +82,35 @@ console.log(map1);
 )}
 ```
 * `onChange` input에 꼭 연결시켜주기~~~ 안그럼 값 안바뀜!
+
+### file upload
+
+```html
+<input onChange={onFileChange} type="file" accept="image"/>
+```
+
+이렇게 불러온 이미지를 다음을 통해 확인할 수 있음...! 처음 알았음...! 개발자로서 지금까지 뭘 한거야...?!!
+
+```javascript
+console.log(event.target.files);
+```
+
+* fragment는 대체 언제 필요한거임?
+
+##### ref
+https://firebase.google.com/docs/reference/js/v8/firebase.storage.Reference
+
+* 이슈 수정
+
+`firebase > storage > rule` 가서 규칙 수정 후 1분 대기
+
+```
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```

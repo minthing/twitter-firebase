@@ -1,4 +1,4 @@
-import { dbService } from "fBase";
+import { dbService, storageService } from "fBase";
 import React, {useState} from "react"
 
 const Tweet = ({tweetObject, isOwner}) => {
@@ -10,6 +10,7 @@ const Tweet = ({tweetObject, isOwner}) => {
       //delete tweet
       //너 충격적으로 쉽구나...?
       await dbService.doc(`tweets/${tweetObject.id}`).delete();
+      await storageService.refFromURL(tweetObject.fileUrl).delete();
       console.log(ok)
     }
   }
@@ -30,6 +31,7 @@ const Tweet = ({tweetObject, isOwner}) => {
       {editing ? <><form onSubmit={onSubmitEdit}><input type="text" onChange={onChangeEdit} value={newTweet} required /><input type="submit" value="update tweet" /><button onClick={toggleEditing}>cancel</button></form></> :
       <>
       <p>{tweetObject.text}</p>
+      {tweetObject.fileUrl && <img src={tweetObject.fileUrl} width="50px" height="50px" />}
       <small>{tweetObject.createUser}</small>
       {isOwner &&
         <>

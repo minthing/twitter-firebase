@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 const Home = ({userObject}) => {
   const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
-  const [image, setImage] = useState();
+  const [image, setImage] = useState("");
   const getTweets = async () => {
     const tweetDatas = await dbService.collection("tweets").get();
     tweetDatas.forEach(document => {

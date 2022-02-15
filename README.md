@@ -114,3 +114,7 @@ service firebase.storage {
   }
 }
 ```
+
+### change profile
+* 이슈 : `setLoggedIn` 삭제 안하고 그대로 쓸 경우, google 로그인 같은 소셜로그인 사용 중에는 userObject가 생성되는 속도가 느리므로 로그인 시도시 오류 발생함 -> `isLoggedIn={Boolean(userObject)}`을 통해 userObject가 생성되었는가를 통해 판단하는게 추후의 오류를 방지할 수 있음
+* `Can't perform a React state update on an unmounted component` 이거 해결해야 함...

@@ -10,6 +10,7 @@ const Tweet = ({tweetObject, isOwner}) => {
       //delete tweet
       //너 충격적으로 쉽구나...?
       await dbService.doc(`tweets/${tweetObject.id}`).delete();
+      // 하루도 안쉬었는데 고작 14시간 지났다고 여기서 삭제한다는 것도 까먹기 있음?
       await storageService.refFromURL(tweetObject.fileUrl).delete();
       console.log(ok)
     }

@@ -1,11 +1,17 @@
-import { authService, dbService } from "fBase";
+import { authService, dbService, storageService } from "fBase";
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import Tweet from "components/Tweet";
+import { v4 as uuidv4 } from 'uuid';
 
 export default ({userObject, refreshUser}) => {
+  console.log(userObject)
+  const defaultImage = "https://firebasestorage.googleapis.com/v0/b/twitter-firebase-4b55c.appspot.com/o/6uceNcllUwhk42n9N71mMOfiWx72%2FdefaultImages%2Fnoun_user.png?alt=media&token=6b0d9ac2-e578-422f-87db-cfcd0d2d1c83"
   // 이미 있는 내용이니까 빈 칸이 아니라 userObject에서 가져오는 게 맞겠구나...
   const [nickname, setNickname] = useState(userObject.displayName);
+  const [myTweets, setMyTweets] = useState([]);
   const history = useHistory();
+  const [profileImage, setProfileImage] = useState(defaultImage)
   const onLogOutClick = () => {
     authService.signOut();
     history.push("/");
@@ -17,7 +23,13 @@ export default ({userObject, refreshUser}) => {
       .where("createUser", "==", userObject.uid)
       .orderBy("createdAt", "desc")
       .get();
-    console.log(tweets.docs.map((doc) => doc.data()));
+      tweets.forEach(document => {
+        const tweetArray = {
+          ...document.data(),
+          id:document.id,
+        }
+        setMyTweets(prev => [tweetArray, ...prev])
+      })
   };
 
   const onChange = (event) =>{
@@ -27,14 +39,38 @@ export default ({userObject, refreshUser}) => {
 
   const onSubmit = async (event) =>{
     event.preventDefault();
+    let fileUrl = ""
     if(userObject.displayName !== nickname){
       // displayName & photoUrl을 바꿀 수 있음
+      if(profileImage){
+        const fileReference = storageService.ref().child(`${userObject.uid}/profile_image`);
+        const response = await fileReference.putString(profileImage, "data_url");
+        fileUrl = await response.ref.getDownloadURL();
+      }
       await userObject.updateProfile({
         displayName: nickname,
+        photoURL:fileUrl
       });
       refreshUser();
+      console.log(userObject)
     }
   }
+
+  const onFileChange = (event) => {
+    // 처음 알았음!!
+    const {target : {files}} = event;
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      // console.log(finishedEvent);
+      const {currentTarget : {result}} = finishedEvent;
+      setProfileImage(result);
+      console.log(result);
+    };
+    // 이름이 너무 길어서 안된다네...ㅋㅋ..
+    reader.readAsDataURL(file);
+  }
+  const deletePhoto = () => setProfileImage(defaultImage);
 
   useEffect(() => {
     getMyTweets();
@@ -43,9 +79,19 @@ export default ({userObject, refreshUser}) => {
     <>
       <form onSubmit={onSubmit}>
         <input onChange={onChange} value={nickname} type="text" placeholder="new nickname" />
+        <input onChange={onFileChange} type="file" accept="image/*"/>
         <input type="submit" value="update profile" />
       </form>
+      <div>
+        <img src={profileImage} width="50px" height="50px" />
+        {profileImage !== defaultImage && <button onClick={deletePhoto}>❌</button>}
+    </div>
       <button onClick={onLogOutClick}>Log Out</button>
+      <div>
+        {myTweets.map((data) => 
+          (<Tweet key={data.id} tweetObject={data} isOwner={data.createUser === userObject.uid}/>)
+        )}
+      </div>
     </>
   )
 }

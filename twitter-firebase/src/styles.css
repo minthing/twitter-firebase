@@ -1,0 +1,87 @@
+#root {
+  background-color:#2f3640;
+  color:white;
+}
+
+/* 인증 페이지 CSS 시작 */
+
+.cont_auth{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.form_email > input {
+  display: block;
+  height:50px;
+  width:350px;
+  border-radius: 9999px;
+  box-sizing: border-box;
+  padding:0px 25px 0px 25px;
+  font-size: 16px;
+  margin-bottom:15px;
+  border:none;
+}
+
+.form_email .input_email{
+  margin-bottom: 10px;
+}
+
+.form_email .toggle_email{
+  background-color: #a29bfe;
+}
+
+.toggle_message{
+  display: block;
+  color:#a29bfe;
+  margin: 30px 0 25px;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.login_error{
+  position: absolute;
+  background:rgb(247, 190, 205);
+  color: black;
+  width: 300px;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px 5px;
+  top: 50px;
+  left: calc(50% - 150px);
+  border: 1px solid rgb(207, 146, 162);
+}
+
+.wrap_social{
+  display: flex;
+  justify-content: space-between;
+}
+
+.wrap_social button{
+  width:48%;
+  height: 45px;
+  border:none;
+  border-radius: 9999px;
+}
+
+/* mo 대응 */
+
+@media (max-width: 600px) {
+  .form_email > input {
+    width: 80vw;
+  }
+}
+
+/* 인증 페이지 CSS 끝 */
+
+/* navigation 시작 */
+
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+}
+
+.list_nav li{
+  color:#a29bfe
+}
+/* navigation 끝 */

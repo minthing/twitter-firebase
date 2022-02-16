@@ -12,6 +12,7 @@ function App() {
       if(user){
         setUserObject({
           displayName: user.displayName,
+          photoURL: user.photoURL ? user.photoURL : "https://firebasestorage.googleapis.com/v0/b/twitter-firebase-4b55c.appspot.com/o/6uceNcllUwhk42n9N71mMOfiWx72%2FdefaultImages%2Fnoun_user.png?alt=media&token=6b0d9ac2-e578-422f-87db-cfcd0d2d1c83",
           uid: user.uid,
           updateProfile: (args) => user.updateProfile(args),
         });
@@ -27,6 +28,7 @@ function App() {
     const user = authService.currentUser;
     setUserObject({
       displayName: user.displayName,
+      photoURL: user.photoURL ? user.photoURL : "https://firebasestorage.googleapis.com/v0/b/twitter-firebase-4b55c.appspot.com/o/6uceNcllUwhk42n9N71mMOfiWx72%2FdefaultImages%2Fnoun_user.png?alt=media&token=6b0d9ac2-e578-422f-87db-cfcd0d2d1c83",
       uid: user.uid,
       updateProfile: (args) => user.updateProfile(args),
     });
@@ -38,7 +40,7 @@ function App() {
   return (
     <>
     {initialized ? <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObject)} userObject={userObject} /> : "loading..."}
-    <footer>&copy;minthing {new Date().getFullYear()}</footer>
+    {/* <footer>&copy;minthing {new Date().getFullYear()}</footer> */}
     </>
   );
 }

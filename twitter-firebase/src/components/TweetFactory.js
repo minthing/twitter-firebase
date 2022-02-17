@@ -18,7 +18,10 @@ const TweetFactory = ({userObject, }) => {
       const innerData = {
         text:tweet,
         createdAt:Date.now(),
+        likeCount: 0,
+        likedId:[],
         createUser:userObject.uid,
+        nickname: userObject.displayName,
         fileUrl
       }
       await dbService.collection("tweets").add(innerData);

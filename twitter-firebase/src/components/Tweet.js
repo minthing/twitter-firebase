@@ -27,14 +27,29 @@ const Tweet = ({tweetObject, isOwner, userObject}) => {
     const {target: {value}} = event;
     setNewTweet(value);
   }
+  const onClickLike = async (event) => {
+    let currentLikedNum = event.currentTarget.querySelector('span').innerHTML*1
+    const currentLikedId = await (await dbService.doc(`tweets/${tweetObject.id}`).get()).data().likedId;
+    if(currentLikedId.indexOf(userObject.uid) === -1){
+      currentLikedId.push(userObject.uid);
+      await dbService.doc(`tweets/${tweetObject.id}`).update({likedId : currentLikedId});
+      await dbService.doc(`tweets/${tweetObject.id}`).update({likeCount : currentLikedNum +1});
+    }else{
+      const sliceCount = currentLikedId.indexOf(userObject.uid);
+      currentLikedId.splice(sliceCount, 1);
+      await dbService.doc(`tweets/${tweetObject.id}`).update({likedId : currentLikedId});
+      await dbService.doc(`tweets/${tweetObject.id}`).update({likeCount : currentLikedNum - 1});
+    }
+  }
   return (
     <div>
-      <img src={userObject.photoURL} width="50px" height="50px" />
+      <img className="profile_edit" src={userObject.photoURL} width="50" height="50" />
       {editing ? <><form onSubmit={onSubmitEdit}><input type="text" onChange={onChangeEdit} value={newTweet} required /><input type="submit" value="update tweet" /><button onClick={toggleEditing}>cancel</button></form></> :
       <>
       <p>{tweetObject.text}</p>
       {tweetObject.fileUrl && <img src={tweetObject.fileUrl} width="50px" height="50px" />}
-      <small>{tweetObject.createUser}</small>
+      <button onClick={onClickLike}>♡ <span>{tweetObject.likeCount}</span></button>
+      <small>{tweetObject.nickname}</small>
       {isOwner &&
         <>
           <button onClick={onDeleteClick}>Delete</button>

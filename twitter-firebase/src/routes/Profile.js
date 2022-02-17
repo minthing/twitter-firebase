@@ -5,13 +5,13 @@ import Tweet from "components/Tweet";
 import { v4 as uuidv4 } from 'uuid';
 
 export default ({userObject, refreshUser}) => {
-  console.log(userObject)
+  // console.log(userObject)
   const defaultImage = "https://firebasestorage.googleapis.com/v0/b/twitter-firebase-4b55c.appspot.com/o/6uceNcllUwhk42n9N71mMOfiWx72%2FdefaultImages%2Fnoun_user.png?alt=media&token=6b0d9ac2-e578-422f-87db-cfcd0d2d1c83"
   // 이미 있는 내용이니까 빈 칸이 아니라 userObject에서 가져오는 게 맞겠구나...
   const [nickname, setNickname] = useState(userObject.displayName);
   const [myTweets, setMyTweets] = useState([]);
   const history = useHistory();
-  const [profileImage, setProfileImage] = useState(defaultImage)
+  const [profileImage, setProfileImage] = useState(userObject.photoURL ? userObject.photoURL : defaultImage)
   const onLogOutClick = () => {
     authService.signOut();
     history.push("/");
@@ -49,10 +49,10 @@ export default ({userObject, refreshUser}) => {
       }
       await userObject.updateProfile({
         displayName: nickname,
-        photoURL:fileUrl
+        photoUrl:fileUrl
       });
       refreshUser();
-      console.log(userObject)
+      // console.log(userObject)
     }
   }
 
@@ -65,7 +65,7 @@ export default ({userObject, refreshUser}) => {
       // console.log(finishedEvent);
       const {currentTarget : {result}} = finishedEvent;
       setProfileImage(result);
-      console.log(result);
+      // console.log(result);
     };
     // 이름이 너무 길어서 안된다네...ㅋㅋ..
     reader.readAsDataURL(file);
@@ -89,7 +89,7 @@ export default ({userObject, refreshUser}) => {
       <button onClick={onLogOutClick}>Log Out</button>
       <div>
         {myTweets.map((data) => 
-          (<Tweet key={data.id} tweetObject={data} isOwner={data.createUser === userObject.uid}/>)
+          (<Tweet key={data.id} tweetObject={data} userObject={userObject} isOwner={data.createUser === userObject.uid}/>)
         )}
       </div>
     </>

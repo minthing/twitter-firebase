@@ -51,6 +51,12 @@
   top: 50px;
   left: calc(50% - 150px);
   border: 1px solid rgb(207, 146, 162);
+  animation: popup 1.5s;
+}
+
+@keyframes popup {
+  from {opacity: 0;top:0;}
+  to {opacity:1;top:50px;}
 }
 
 .wrap_social{
@@ -77,11 +83,20 @@
 
 /* navigation 시작 */
 
-a, a:hover, a:focus, a:active {
-  text-decoration: none;
+.wrap_nav{
+  background-color:white;
+  height: 50px;
 }
 
 .list_nav li{
-  color:#a29bfe
+  display: inline-block;
+}
+
+.list_nav a{
+  display: block;
+}
+
+.profile_img{
+  border-radius: 50%;
 }
 /* navigation 끝 */

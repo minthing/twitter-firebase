@@ -1,7 +1,7 @@
 import { dbService, storageService } from "fBase";
 import React, {useState} from "react"
 
-const Tweet = ({tweetObject, isOwner}) => {
+const Tweet = ({tweetObject, isOwner, userObject}) => {
   const [editing, setEditing] = useState(false);
   const [newTweet, setNewTweet] = useState(tweetObject.text);
   const onDeleteClick = async () => {
@@ -29,6 +29,7 @@ const Tweet = ({tweetObject, isOwner}) => {
   }
   return (
     <div>
+      <img src={userObject.photoURL} width="50px" height="50px" />
       {editing ? <><form onSubmit={onSubmitEdit}><input type="text" onChange={onChangeEdit} value={newTweet} required /><input type="submit" value="update tweet" /><button onClick={toggleEditing}>cancel</button></form></> :
       <>
       <p>{tweetObject.text}</p>

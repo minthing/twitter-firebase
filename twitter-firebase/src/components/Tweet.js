@@ -1,7 +1,7 @@
 import { dbService, storageService } from "fBase";
 import React, {useState} from "react"
 
-const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, refreshTweetData, myTweets}) => {
+const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, myTweets}) => {
   const [editing, setEditing] = useState(false);
   const [newTweet, setNewTweet] = useState(tweetObject.text);
   const onDeleteClick = async () => {
@@ -27,10 +27,13 @@ const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, refreshTweetData
     const {target: {value}} = event;
     setNewTweet(value);
   }
+  let currentLikedId = [];
+  let currentUserLikedList = [];
   const onClickLike = async (event) => {
     let currentLikedNum = event.currentTarget.querySelector('span').innerHTML*1
-    const currentLikedId = await (await dbService.doc(`tweets/${tweetObject.id}`).get()).data().likedId;
-    const currentUserLikedList = await (await dbService.doc(`like/${userObject.uid}`).get()).data().likedData;
+    currentLikedId = await (await dbService.doc(`tweets/${tweetObject.id}`).get()).data().likedId;
+    // console.log(currentLikedId)
+    currentUserLikedList = await (await dbService.doc(`like/${userObject.uid}`).get()).data().likedData;
     if(currentLikedId.indexOf(userObject.uid) === -1){
       currentLikedId.push(userObject.uid);
       currentUserLikedList.push(tweetObject.id)
@@ -46,7 +49,9 @@ const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, refreshTweetData
       await dbService.doc(`tweets/${tweetObject.id}`).update({likeCount : currentLikedNum - 1});
       await dbService.doc(`like/${userObject.uid}`).update({likedData : currentUserLikedList});
     }
-    refreshTweet(refreshTweetData, myTweets);
+    if(myTweets){
+      refreshTweet();
+    }
   }
   return (
     <div>

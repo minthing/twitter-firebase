@@ -33,9 +33,22 @@ export default ({userObject, refreshUser}) => {
       })
   };
 
-  console.log(myTweets)
-  function refreshTweet(data, isMyTweets){
-    window.location.reload();
+  const refreshMyTweets = async() => {
+    let tempArray = [];
+    const tweets = await dbService
+    .collection("tweets")
+    .where("createUser", "==", userObject.uid)
+    .orderBy("createdAt", "desc")
+    .get();
+    tweets.forEach(document => {
+      const tweetArray = {
+        ...document.data(),
+        id:document.id,
+      }
+      tempArray.push(tweetArray);
+    })
+    // console.log(tempArray)
+    setMyTweets(tempArray);
   }
 
   const getLikedTweets = async () => {
@@ -50,11 +63,34 @@ export default ({userObject, refreshUser}) => {
         .get();
         const tweetArray = {
           ...tweets.data(),
-          id:index,
+          id:tweets.id
         }
         setLikedTweets(prev => [tweetArray, ...prev])
       });
     }
+  }
+
+  const refreshLikedTweets = async() => {
+    let tempArray = [];
+    const likeData = await dbService
+      .doc(`like/${userObject.uid}`)
+      .get();
+        const myLike = likeData.data().likedData;
+        myLike.forEach(async (element, index) => {
+          const tweets = await dbService
+          .doc(`tweets/${element}`)
+          .get();
+          const tweetArray = {
+            ...tweets.data(),
+            id:tweets.id
+          }
+          setLikedTweets(prev => [tweetArray, ...prev]);
+        });
+  }
+
+  function refreshTweet(){
+    refreshMyTweets();
+    setTimeout(()=>{ refreshLikedTweets(); }, 1000);
   }
 
   const onChange = (event) =>{
@@ -67,7 +103,7 @@ export default ({userObject, refreshUser}) => {
     let fileUrl = ""
     if(userObject.displayName !== nickname){
       // displayName & photoUrl을 바꿀 수 있음
-      if(profileImage){
+      if(profileImage !== defaultImage){
         const fileReference = storageService.ref().child(`${userObject.uid}/profile_image`);
         const response = await fileReference.putString(profileImage, "data_url");
         fileUrl = await response.ref.getDownloadURL();
@@ -116,13 +152,13 @@ export default ({userObject, refreshUser}) => {
       <h3>my Tweets</h3>
       <div>
         {myTweets.map((data) => 
-          (<Tweet key={data.id} tweetObject={data} userObject={userObject} myTweets={true} refreshTweet={refreshTweet} refreshTweetData={myTweets} isOwner={data.createUser === userObject.uid}/>)
+          (<Tweet key={data.id} tweetObject={data} userObject={userObject} myTweets={true} refreshTweet={refreshTweet} isOwner={data.createUser === userObject.uid}/>)
         )}
       </div>
       <h3>liked Tweets</h3>
       <div>
         {likedTweets.map((data) => 
-          (<Tweet key={data.id} tweetObject={data} userObject={userObject} myTweets={false} refreshTweet={refreshTweet} refreshTweetData={likedTweets} isOwner={data.createUser === userObject.uid}/>)
+          (<Tweet key={data.id} tweetObject={data} userObject={userObject} myTweets={true} refreshTweet={refreshTweet} isOwner={data.createUser === userObject.uid}/>)
         )}
       </div>
     </>

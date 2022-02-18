@@ -2,7 +2,7 @@ import { dbService, storageService } from "fBase";
 import React, {useState} from "react";
 import { v4 as uuidv4 } from 'uuid';
 
-const TweetFactory = ({userObject, }) => {
+const TweetFactory = ({userObject}) => {
   const [tweet, setTweet] = useState("");
   const [image, setImage] = useState("");
 
@@ -45,7 +45,6 @@ const TweetFactory = ({userObject, }) => {
       // console.log(finishedEvent);
       const {currentTarget : {result}} = finishedEvent;
       setImage(result);
-      console.log(result);
     };
     reader.readAsDataURL(file);
   }

@@ -10,6 +10,7 @@ export default ({userObject, refreshUser}) => {
   // 이미 있는 내용이니까 빈 칸이 아니라 userObject에서 가져오는 게 맞겠구나...
   const [nickname, setNickname] = useState(userObject.displayName);
   const [myTweets, setMyTweets] = useState([]);
+  const [likedTweets, setLikedTweets] = useState([]);
   const history = useHistory();
   const [profileImage, setProfileImage] = useState(userObject.photoURL ? userObject.photoURL : defaultImage)
   const onLogOutClick = () => {
@@ -31,6 +32,30 @@ export default ({userObject, refreshUser}) => {
         setMyTweets(prev => [tweetArray, ...prev])
       })
   };
+
+  console.log(myTweets)
+  function refreshTweet(data, isMyTweets){
+    window.location.reload();
+  }
+
+  const getLikedTweets = async () => {
+    const likeData = await dbService
+      .doc(`like/${userObject.uid}`)
+      .get();
+    const myLike = likeData.data().likedData;
+    if(myLike){
+      myLike.forEach(async (element, index) => {
+        const tweets = await dbService
+        .doc(`tweets/${element}`)
+        .get();
+        const tweetArray = {
+          ...tweets.data(),
+          id:index,
+        }
+        setLikedTweets(prev => [tweetArray, ...prev])
+      });
+    }
+  }
 
   const onChange = (event) =>{
     const {target:{value}} = event;
@@ -74,6 +99,7 @@ export default ({userObject, refreshUser}) => {
 
   useEffect(() => {
     getMyTweets();
+    getLikedTweets();
   }, []);
   return(
     <>
@@ -87,9 +113,16 @@ export default ({userObject, refreshUser}) => {
         {profileImage !== defaultImage && <button onClick={deletePhoto}>❌</button>}
     </div>
       <button onClick={onLogOutClick}>Log Out</button>
+      <h3>my Tweets</h3>
       <div>
         {myTweets.map((data) => 
-          (<Tweet key={data.id} tweetObject={data} userObject={userObject} isOwner={data.createUser === userObject.uid}/>)
+          (<Tweet key={data.id} tweetObject={data} userObject={userObject} myTweets={true} refreshTweet={refreshTweet} refreshTweetData={myTweets} isOwner={data.createUser === userObject.uid}/>)
+        )}
+      </div>
+      <h3>liked Tweets</h3>
+      <div>
+        {likedTweets.map((data) => 
+          (<Tweet key={data.id} tweetObject={data} userObject={userObject} myTweets={false} refreshTweet={refreshTweet} refreshTweetData={likedTweets} isOwner={data.createUser === userObject.uid}/>)
         )}
       </div>
     </>

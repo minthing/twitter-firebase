@@ -141,7 +141,7 @@ export default ({userObject, refreshUser}) => {
     getLikedTweets();
   }, []);
   return(
-    <>
+    <div>
       <form onSubmit={onSubmit}>
         <input onChange={onChange} value={nickname} type="text" placeholder="new nickname" />
         <input onChange={onFileChange} type="file" accept="image/*"/>
@@ -164,6 +164,6 @@ export default ({userObject, refreshUser}) => {
           (<Tweet key={data.id} tweetObject={data} userObject={userObject} myTweets={true} refreshTweet={refreshTweet} isOwner={data.createUser === userObject.uid}/>)
         )}
       </div>
-    </>
+    </div>
   )
 }

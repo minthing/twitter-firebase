@@ -1,6 +1,11 @@
-#root {
+body {
   background-color:#2f3640;
   color:white;
+}
+
+
+#root{
+  display: flex;
 }
 
 /* 인증 페이지 CSS 시작 */
@@ -83,20 +88,40 @@
 
 /* navigation 시작 */
 
+a{
+  text-decoration: none;
+}
+
 .wrap_nav{
   background-color:white;
-  height: 50px;
+  width: 20vw;
+}
+
+.list_nav{
 }
 
 .list_nav li{
+  display: flex;
+  justify-content: center;
+  margin-left: -20px;
+  margin-bottom: 25px;
+}
+
+.nav_text{
   display: inline-block;
+  margin-top: -3px;
+  margin-left: 10px;
+  color:#2f3640;
+  text-decoration: none;
+  font-size:24px;
+  font-weight:700;
 }
 
-.list_nav a{
-  display: block;
-}
-
-.profile_img{
-  border-radius: 50%;
-}
 /* navigation 끝 */
+
+/* home 시작 */
+.wrap_home{
+  flex:2
+}
+
+/* home 끝 */

@@ -27,13 +27,14 @@ const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, myTweets}) => {
     const {target: {value}} = event;
     setNewTweet(value);
   }
-  let currentLikedId = [];
-  let currentUserLikedList = [];
+  // let currentLikedId = [];
+  // let currentUserLikedList = [];
   const onClickLike = async (event) => {
     let currentLikedNum = event.currentTarget.querySelector('span').innerHTML*1
-    currentLikedId = await (await dbService.doc(`tweets/${tweetObject.id}`).get()).data().likedId;
-    // console.log(currentLikedId)
-    currentUserLikedList = await (await dbService.doc(`like/${userObject.uid}`).get()).data().likedData;
+    let currentTweetData = await dbService.doc(`tweets/${tweetObject.id}`).get();
+    console.log(tweetObject.id);
+    let currentLikedId = await currentTweetData.data().likedId;
+    let currentUserLikedList = await (await dbService.doc(`like/${userObject.uid}`).get()).data().likedData;
     if(currentLikedId.indexOf(userObject.uid) === -1){
       currentLikedId.push(userObject.uid);
       currentUserLikedList.push(tweetObject.id)

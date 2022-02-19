@@ -35,6 +35,7 @@ export default ({userObject, refreshUser}) => {
 
   const refreshMyTweets = async() => {
     let tempArray = [];
+    setMyTweets([]);
     const tweets = await dbService
     .collection("tweets")
     .where("createUser", "==", userObject.uid)
@@ -72,6 +73,7 @@ export default ({userObject, refreshUser}) => {
 
   const refreshLikedTweets = async() => {
     let tempArray = [];
+    setLikedTweets([])
     const likeData = await dbService
       .doc(`like/${userObject.uid}`)
       .get();
@@ -90,7 +92,8 @@ export default ({userObject, refreshUser}) => {
 
   function refreshTweet(){
     refreshMyTweets();
-    setTimeout(()=>{ refreshLikedTweets(); }, 1000);
+    refreshLikedTweets();
+    // setTimeout(()=>{  }, 1000);
   }
 
   const onChange = (event) =>{

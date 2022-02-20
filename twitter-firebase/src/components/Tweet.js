@@ -55,21 +55,23 @@ const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, myTweets}) => {
     }
   }
   return (
-    <div>
-      <img className="profile_edit" src={userObject.photoURL} width="50" height="50" />
+    <div className="tweet">
+      <img className="profile_img" src={userObject.photoURL} width="42" height="42" />
       {editing ? <><form onSubmit={onSubmitEdit}><input type="text" onChange={onChangeEdit} value={newTweet} required /><input type="submit" value="update tweet" /><button onClick={toggleEditing}>cancel</button></form></> :
-      <>
-      <p>{tweetObject.text}</p>
-      {tweetObject.fileUrl && <img src={tweetObject.fileUrl} width="50px" height="50px" />}
-      <button onClick={onClickLike}>♡ <span>{tweetObject.likeCount}</span></button>
-      <small>{tweetObject.nickname}</small>
+      <div className="wrap_tweet_text">
+        <div className="wrap_title">
+      <div className="nickname">{userObject.displayName}</div>
       {isOwner &&
-        <>
-          <button onClick={onDeleteClick}>Delete</button>
-          <button onClick={toggleEditing}>Edit</button>
-        </>
+        <div className="wrap_button">
+          <button className="btn_delete" onClick={onDeleteClick}>Delete</button>
+          <button className="btn_edit" onClick={toggleEditing}>Edit</button>
+        </div>
       }
-      </>
+      </div>
+      <span className="tweet_text">{tweetObject.text}</span>
+      {tweetObject.fileUrl && <img src={tweetObject.fileUrl} width="50px" height="50px" />}
+      <button class="like" onClick={onClickLike}>♡ <span>{tweetObject.likeCount}</span></button>
+      </div>
     }
     </div>
   )

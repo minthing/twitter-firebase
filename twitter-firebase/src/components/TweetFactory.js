@@ -51,6 +51,8 @@ const TweetFactory = ({userObject}) => {
   const deletePhoto = () => setImage(null);
 
   return (
+    <>
+    <img className="profile_img" src={userObject.photoURL} width="50" height="50" />
     <form onSubmit={onSubmit}>
     <input value={tweet} onChange={onChange} type="text" placeholder="무슨 일이 일어나고 있나요?" maxLength={140} />
     <input onChange={onFileChange} type="file" accept="image/*"/>
@@ -63,6 +65,7 @@ const TweetFactory = ({userObject}) => {
     )
     }
   </form>
+  </>
   )
 }
 

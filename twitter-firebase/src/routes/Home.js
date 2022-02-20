@@ -28,7 +28,8 @@ const Home = ({userObject}) => {
   }, [])
   // console.log(tweets);
   return (
-    <div class="wrap_home">
+    <div className="wrap_home">
+      <h3 className="title">Home</h3>
       <TweetFactory userObject={userObject} />
       <div>
         {tweets.map((data) => 

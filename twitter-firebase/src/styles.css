@@ -1,6 +1,6 @@
 body {
-  background-color:#2f3640;
-  color:white;
+  background-color:white;
+  color:black;
 }
 
 
@@ -95,9 +95,7 @@ a{
 .wrap_nav{
   background-color:white;
   width: 20vw;
-}
-
-.list_nav{
+  border-right:1px solid rgb(246, 246, 246);
 }
 
 .list_nav li{
@@ -121,7 +119,62 @@ a{
 
 /* home 시작 */
 .wrap_home{
-  flex:2
+  flex:2;
+  margin:0 16px;
+}
+
+.title{
+  font-weight: 700;
+  font-size:20px;
+  margin:16px 0;
 }
 
 /* home 끝 */
+
+/* tweet 시작 */
+.tweet{
+  padding:10px 12px 10px 12px;
+  border-bottom: 1px solid rgb(246, 246, 246);
+  display: flex;
+}
+
+.profile_img{
+  border-radius: 50%;
+}
+
+.tweet:hover{
+  background:wheat;
+}
+
+.wrap_tweet_text{
+  flex:2;
+  margin: 0 10px
+}
+
+.wrap_title{
+  display: flex;
+  justify-content: space-between;
+}
+
+.nickname{
+  font-weight:600;
+  font-size:16px;
+  margin: 4px 0 6px 0;
+}
+
+.tweet_text{
+  display: block;
+  margin-bottom: 16px;
+}
+
+.like{
+  background:none;
+  border:none;
+  padding:0;
+  transition: all 0.5s;
+}
+
+.like:hover{
+  color:rgb(220, 156, 167);
+}
+/* tweet 끝 */

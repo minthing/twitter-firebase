@@ -70,7 +70,7 @@ const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, myTweets}) => {
       </div>
       <span className="tweet_text">{tweetObject.text}</span>
       {tweetObject.fileUrl && <img src={tweetObject.fileUrl} width="50px" height="50px" />}
-      <button class="like" onClick={onClickLike}>♡ <span>{tweetObject.likeCount}</span></button>
+      <button className="like" onClick={onClickLike}>♡ <span>{tweetObject.likeCount}</span></button>
       </div>
     }
     </div>

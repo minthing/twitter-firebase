@@ -1,7 +1,8 @@
 import { dbService, storageService } from "fBase";
 import React, {useState} from "react";
 import { v4 as uuidv4 } from 'uuid';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faImage } from '@fortawesome/free-solid-svg-icons'
 const TweetFactory = ({userObject}) => {
   const [tweet, setTweet] = useState("");
   const [image, setImage] = useState("");
@@ -51,12 +52,21 @@ const TweetFactory = ({userObject}) => {
   const deletePhoto = () => setImage(null);
 
   return (
-    <>
+    <div className="wrap_tweeting">
     <img className="profile_img" src={userObject.photoURL} width="50" height="50" />
     <form onSubmit={onSubmit}>
-    <input value={tweet} onChange={onChange} type="text" placeholder="무슨 일이 일어나고 있나요?" maxLength={140} />
-    <input onChange={onFileChange} type="file" accept="image/*"/>
-    <input type="submit" value="tweet"/>
+    <input className="input_tweet_text" value={tweet} onChange={onChange} type="text" placeholder="무슨 일이 일어나고 있나요?" maxLength={140} />
+    <div className="wrap_tweet_option">
+    <FontAwesomeIcon
+        icon={faImage}
+        color={"#a29bfe"}
+        size="2x"
+        style={{ position:"absolute", zIndex:-10, fontSize:25 }}
+        
+      />
+    <input className="input_tweet_image" onChange={onFileChange} type="file" accept="image/*"/>
+    <input className="input_tweet_btn" type="submit" value="Tweet"/>
+    </div>
     {image && (
     <div>
       <img src={image} width="50px" height="50px" />
@@ -65,7 +75,7 @@ const TweetFactory = ({userObject}) => {
     )
     }
   </form>
-  </>
+  </div>
   )
 }
 

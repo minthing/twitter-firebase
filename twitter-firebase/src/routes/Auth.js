@@ -23,7 +23,7 @@ const Auth =  () => {
   }
   return(
     <div className="cont_auth">
-      <div class="wrap_login">
+      <div className="wrap_login">
       <FontAwesomeIcon
         icon={faTwitter}
         color={"#a29bfe"}

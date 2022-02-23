@@ -134,8 +134,8 @@ a{
 /* tweet 시작 */
 .tweet{
   padding:10px 12px 10px 12px;
-  border-bottom: 1px solid rgb(246, 246, 246);
   display: flex;
+  border-top: 1px solid rgb(246, 246, 246);
 }
 
 .profile_img{
@@ -178,3 +178,52 @@ a{
   color:rgb(220, 156, 167);
 }
 /* tweet 끝 */
+
+/* 트윗하기 시작 */
+.wrap_tweeting{
+  display: flex;
+  padding-bottom: 10px;
+}
+
+.wrap_tweeting form{
+  flex:2;
+  margin: 0 20px 0 0;
+}
+
+.input_tweet_text{
+  display: block;
+  width: 100%;
+  border: none;
+  font-size: 18px;
+  padding: 10px 10px 10px 10px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.wrap_tweet_option{
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  margin-left: 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgb(246, 246, 246);
+}
+
+.input_tweet_image{
+  text-indent: -9999px;
+  width: 26px;
+  height:24px;
+}
+
+.input_tweet_btn{
+  border:none;
+  background: #a29bfe;
+  color: white;
+  border-radius: 9999px;
+  padding:5px 15px 5px 15px;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* 트윗하기 끝 */

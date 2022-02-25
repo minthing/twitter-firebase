@@ -125,7 +125,9 @@ service firebase.storage {
 <img width="544" alt="image" src="https://user-images.githubusercontent.com/54466684/155706019-64a6a7b2-4dd8-4d15-8fd7-3200672c3ede.png">
 
 * home css 진행중
-<img width="842" alt="image" src="https://user-images.githubusercontent.com/54466684/155706114-bb653977-10b7-4eb1-8d60-5d487fd9deb8.png">
+ 
+<img width="846" alt="image" src="https://user-images.githubusercontent.com/54466684/155706638-3e3c35cf-c4fd-4c0c-9fa9-b5e39df28ffc.png">
+
 
 #### 프로필
   * 프로필 사진 추가

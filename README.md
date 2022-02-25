@@ -118,3 +118,30 @@ service firebase.storage {
 ### change profile
 * 이슈 : `setLoggedIn` 삭제 안하고 그대로 쓸 경우, google 로그인 같은 소셜로그인 사용 중에는 userObject가 생성되는 속도가 느리므로 로그인 시도시 오류 발생함 -> `isLoggedIn={Boolean(userObject)}`을 통해 userObject가 생성되었는가를 통해 판단하는게 추후의 오류를 방지할 수 있음
 * `Can't perform a React state update on an unmounted component` 이거 해결해야 함...
+
+### 📍 추가 작업 진행 현황
+
+* css create user 완료
+<img width="544" alt="image" src="https://user-images.githubusercontent.com/54466684/155706019-64a6a7b2-4dd8-4d15-8fd7-3200672c3ede.png">
+
+* home css 진행중
+<img width="842" alt="image" src="https://user-images.githubusercontent.com/54466684/155706114-bb653977-10b7-4eb1-8d60-5d487fd9deb8.png">
+
+#### 프로필
+  * 프로필 사진 추가
+  * 프로필 디폴트 이미지 firebase 기반 업로드 추가
+  * 디폴트 이미지일 경우에는 프로필 이미지 delete 버튼 삭제되도록 수정
+  
+  
+##### 📍 이슈
+  * 모든 프로필 이미지 일괄적으로 바뀌는 중 -> 각각의 user db에서 프로필 이미지 가져올 수 있도록 해야 함
+  * 프로필 이미지 가져오는 로직에서 이슈 발생 중 (엑박 발생... 수정해야함...)
+
+
+#### 좋아요 기능 추가
+  * 프로필에서 내가 좋아요한 게시글 몰아보기 기능 추가
+   
+   
+
+##### 📍 이슈
+  * 내가 좋아요 한 게시글의 하트 이모티콘 변경 하기 위해서 userObject에서 해당 데이터를 가지고 있어야 함...

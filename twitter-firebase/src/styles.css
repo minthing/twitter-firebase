@@ -6,6 +6,7 @@ body {
 
 #root{
   display: flex;
+  justify-content: center;
 }
 
 /* 인증 페이지 CSS 시작 */
@@ -26,7 +27,7 @@ body {
   padding:0px 25px 0px 25px;
   font-size: 16px;
   margin-bottom:15px;
-  border:none;
+  border:1px solid #777;
 }
 
 .form_email .input_email{
@@ -143,12 +144,13 @@ a{
 }
 
 .tweet:hover{
-  background:wheat;
+  background:rgb(246, 246, 246);
 }
 
 .wrap_tweet_text{
   flex:2;
-  margin: 0 10px
+  margin: 0 10px;
+  position: relative;
 }
 
 .wrap_title{
@@ -160,6 +162,30 @@ a{
   font-weight:600;
   font-size:16px;
   margin: 4px 0 6px 0;
+}
+
+.wrap_button{
+  display:none;
+}
+
+.wrap_button.active{
+  display: flex;
+  position:absolute;
+  right: -15px;
+  top: 20px;
+  flex-direction: column;
+  border: 1px solid rgb(211, 211, 211);
+  background:white;
+}
+
+.wrap_button.active button{
+  border: none;
+  background: none;
+  padding: 5px 10px;
+}
+
+.wrap_button.active button:hover{
+  background: rgb(211, 211, 211);
 }
 
 .tweet_text{
@@ -176,6 +202,16 @@ a{
 
 .like:hover{
   color:rgb(220, 156, 167);
+}
+
+.tweet_img{
+  width:100%;
+  height:auto;
+  border-radius: 10px;
+}
+
+.wrap_button.active .btn_edit{
+  border-top: 1px solid rgb(246, 246, 246);
 }
 /* tweet 끝 */
 

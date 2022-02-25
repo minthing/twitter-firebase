@@ -1,7 +1,11 @@
 import { dbService, storageService } from "fBase";
 import React, {useState} from "react"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEllipsis, faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 
 const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, myTweets}) => {
+  const [isActive, setIsActive] = useState(false);
   const [editing, setEditing] = useState(false);
   const [newTweet, setNewTweet] = useState(tweetObject.text);
   const onDeleteClick = async () => {
@@ -27,12 +31,14 @@ const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, myTweets}) => {
     const {target: {value}} = event;
     setNewTweet(value);
   }
+  const toggleButton = () => {
+    setIsActive(!isActive);
+  }
   // let currentLikedId = [];
   // let currentUserLikedList = [];
   const onClickLike = async (event) => {
     let currentLikedNum = event.currentTarget.querySelector('span').innerHTML*1
     let currentTweetData = await dbService.doc(`tweets/${tweetObject.id}`).get();
-    console.log(tweetObject.id);
     let currentLikedId = await currentTweetData.data().likedId;
     let currentUserLikedList = await (await dbService.doc(`like/${userObject.uid}`).get()).data().likedData;
     if(currentLikedId.indexOf(userObject.uid) === -1){
@@ -62,15 +68,18 @@ const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, myTweets}) => {
         <div className="wrap_title">
       <div className="nickname">{userObject.displayName}</div>
       {isOwner &&
-        <div className="wrap_button">
+      <>
+        <div onClick={toggleButton} className="icon_toggle"><FontAwesomeIcon style={{color:"#777"}} icon={faEllipsis} /></div>
+        <div className={isActive ? "active wrap_button" : "wrap_button"}>
           <button className="btn_delete" onClick={onDeleteClick}>Delete</button>
           <button className="btn_edit" onClick={toggleEditing}>Edit</button>
         </div>
+      </>
       }
       </div>
-      <span className="tweet_text">{tweetObject.text}</span>
-      {tweetObject.fileUrl && <img src={tweetObject.fileUrl} width="50px" height="50px" />}
-      <button className="like" onClick={onClickLike}>♡ <span>{tweetObject.likeCount}</span></button>
+      {tweetObject.text !=="" && <span className="tweet_text">{tweetObject.text}</span>}
+      {tweetObject.fileUrl && <img className="tweet_img" src={tweetObject.fileUrl} />}
+      <button className="like" onClick={onClickLike}><FontAwesomeIcon style={{color:"#777", marginRight:5}} icon={tweetObject.id === userObject.likedData ? faHeart : faHeartRegular} /><span>{tweetObject.likeCount}</span></button>
       </div>
     }
     </div>

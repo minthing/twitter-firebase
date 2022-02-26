@@ -119,7 +119,7 @@ a{
 /* navigation 끝 */
 
 /* home 시작 */
-.wrap_home{
+.wrap_home, .wrap_profile{
   flex:2;
   margin:0 16px;
 }
@@ -141,6 +141,7 @@ a{
 
 .profile_img{
   border-radius: 50%;
+  margin-bottom: -5px;
 }
 
 .tweet:hover{
@@ -263,3 +264,41 @@ a{
 }
 
 /* 트윗하기 끝 */
+
+/* 프로필 시작 */
+
+.input_new_nickname{
+  display: block;
+  border: 1px solid rgb(211, 211, 211);
+  border-radius: 9999px;
+  font-size: 16px;
+  padding: 10px 10px 10px 10px;
+  box-sizing: border-box;
+  outline: none;
+  width: 30%;
+}
+
+.wrap_profile_current{
+  position: relative;
+}
+
+.current_profile{
+  border-radius: 50%;
+}
+
+.delete_photo_btn{
+  position: absolute;
+  border:none;
+  background:none;
+  bottom: 17px;
+  left: 30px;
+}
+
+.wrap_change_profile{
+  display: flex;
+}
+
+.profile_change_form{
+  flex: 2;
+}
+/* 프로필 끝 */

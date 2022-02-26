@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Tweet from "components/Tweet";
 import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 export default ({userObject, refreshUser}) => {
   // console.log(userObject)
@@ -103,21 +105,19 @@ export default ({userObject, refreshUser}) => {
 
   const onSubmit = async (event) =>{
     event.preventDefault();
-    let fileUrl = ""
-    if(userObject.displayName !== nickname){
+    let fileUrl = profileImage;
       // displayName & photoUrl을 바꿀 수 있음
-      if(profileImage !== defaultImage){
+      if((profileImage !== defaultImage) || (userObject.displayName !== nickname)){
         const fileReference = storageService.ref().child(`${userObject.uid}/profile_image`);
         const response = await fileReference.putString(profileImage, "data_url");
         fileUrl = await response.ref.getDownloadURL();
+        console.log(fileUrl)
       }
       await userObject.updateProfile({
         displayName: nickname,
-        photoUrl:fileUrl
+        photoUrl: fileUrl
       });
       refreshUser();
-      // console.log(userObject)
-    }
   }
 
   const onFileChange = (event) => {
@@ -141,24 +141,33 @@ export default ({userObject, refreshUser}) => {
     getLikedTweets();
   }, []);
   return(
-    <div>
-      <form onSubmit={onSubmit}>
-        <input onChange={onChange} value={nickname} type="text" placeholder="new nickname" />
-        <input onChange={onFileChange} type="file" accept="image/*"/>
-        <input type="submit" value="update profile" />
+    <div className="wrap_profile">
+      <h3 className="title">Change Profile</h3>
+      <div class="wrap_change_profile">
+      <div className="wrap_profile_current">
+        <img src={profileImage} className="current_profile" width="50px" height="50px" />
+        {profileImage !== defaultImage && <button className="delete_photo_btn" onClick={deletePhoto}>❌</button>}
+      </div>
+      <form className="profile_change_form" onSubmit={onSubmit}>
+      <FontAwesomeIcon
+        icon={faImage}
+        color={"#a29bfe"}
+        size="2x"
+        style={{ position:"absolute", zIndex:-10, fontSize:25, marginTop:10 }}
+      />
+        <input className="input_tweet_image" onChange={onFileChange} type="file" accept="image/*"/>
+        <input className="input_new_nickname" onChange={onChange} value={nickname} type="text" placeholder="new nickname" />
+        <input className="input_tweet_btn" type="submit" value="update profile" />
       </form>
-      <div>
-        <img src={profileImage} width="50px" height="50px" />
-        {profileImage !== defaultImage && <button onClick={deletePhoto}>❌</button>}
-    </div>
+      </div>
       <button onClick={onLogOutClick}>Log Out</button>
-      <h3>my Tweets</h3>
+      <h3 className="title">My Tweets</h3>
       <div>
         {myTweets.map((data) => 
           (<Tweet key={data.id} tweetObject={data} userObject={userObject} myTweets={true} refreshTweet={refreshTweet} isOwner={data.createUser === userObject.uid}/>)
         )}
       </div>
-      <h3>liked Tweets</h3>
+      <h3 className="title">Liked Tweets</h3>
       <div>
         {likedTweets.map((data) => 
           (<Tweet key={data.id} tweetObject={data} userObject={userObject} myTweets={true} refreshTweet={refreshTweet} isOwner={data.createUser === userObject.uid}/>)

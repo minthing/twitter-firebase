@@ -105,13 +105,14 @@ export default ({userObject, refreshUser}) => {
 
   const onSubmit = async (event) =>{
     event.preventDefault();
-    let fileUrl = profileImage;
+    let fileUrl = userObject.profileImage;
       // displayName & photoUrl을 바꿀 수 있음
-      if((profileImage !== defaultImage) || (userObject.displayName !== nickname)){
+      if(profileImage !== defaultImage){
         const fileReference = storageService.ref().child(`${userObject.uid}/profile_image`);
         const response = await fileReference.putString(profileImage, "data_url");
         fileUrl = await response.ref.getDownloadURL();
-        console.log(fileUrl)
+      }else{
+        fileUrl = defaultImage
       }
       await userObject.updateProfile({
         displayName: nickname,
@@ -143,7 +144,7 @@ export default ({userObject, refreshUser}) => {
   return(
     <div className="wrap_profile">
       <h3 className="title">Change Profile</h3>
-      <div class="wrap_change_profile">
+      <div className="wrap_change_profile">
       <div className="wrap_profile_current">
         <img src={profileImage} className="current_profile" width="50px" height="50px" />
         {profileImage !== defaultImage && <button className="delete_photo_btn" onClick={deletePhoto}>❌</button>}
@@ -153,14 +154,14 @@ export default ({userObject, refreshUser}) => {
         icon={faImage}
         color={"#a29bfe"}
         size="2x"
-        style={{ position:"absolute", zIndex:-10, fontSize:25, marginTop:10 }}
+        style={{ position:"absolute", zIndex:-10, fontSize:25, marginTop:15,marginLeft:10 }}
       />
         <input className="input_tweet_image" onChange={onFileChange} type="file" accept="image/*"/>
         <input className="input_new_nickname" onChange={onChange} value={nickname} type="text" placeholder="new nickname" />
         <input className="input_tweet_btn" type="submit" value="update profile" />
       </form>
       </div>
-      <button onClick={onLogOutClick}>Log Out</button>
+      <button className="btn_logout" onClick={onLogOutClick}>Log Out</button>
       <h3 className="title">My Tweets</h3>
       <div>
         {myTweets.map((data) => 

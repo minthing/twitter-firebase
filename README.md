@@ -129,6 +129,11 @@ service firebase.storage {
 <img width="846" alt="image" src="https://user-images.githubusercontent.com/54466684/155706638-3e3c35cf-c4fd-4c0c-9fa9-b5e39df28ffc.png">
 
 
+* profile css 완료
+
+<img width="1438" alt="image" src="https://user-images.githubusercontent.com/54466684/155874826-beee1010-a73e-4127-b00c-171089730ac6.png">
+
+
 #### 프로필
   * 프로필 사진 추가
   * 프로필 디폴트 이미지 firebase 기반 업로드 추가
@@ -137,13 +142,16 @@ service firebase.storage {
   
 ##### 📍 이슈
   * 모든 프로필 이미지 일괄적으로 바뀌는 중 -> 각각의 user db에서 프로필 이미지 가져올 수 있도록 해야 함
-  * 프로필 이미지 가져오는 로직에서 이슈 발생 중 (엑박 발생... 수정해야함...)
-
+  * ~~프로필 이미지 가져오는 로직에서 이슈 발생 중 (엑박 발생... 수정해야함...)~~
+    * 수정 완료 : db의 KEY가 변화해서 데이터를 가져오지 못하는 현상... 우려스럽지만 데이터 규칙을 변화시켜서 해결
+  * 변경된 프로필 데이터가 바로 반영되지 않음
 
 #### 좋아요 기능 추가
   * 프로필에서 내가 좋아요한 게시글 몰아보기 기능 추가
    
-   
 
 ##### 📍 이슈
   * 내가 좋아요 한 게시글의 하트 이모티콘 변경 하기 위해서 userObject에서 해당 데이터를 가지고 있어야 함...
+
+#### 추가 작업해야 할 부분
+* mobile 대응 화면

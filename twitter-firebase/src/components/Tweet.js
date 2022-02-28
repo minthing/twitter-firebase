@@ -63,7 +63,10 @@ const Tweet = ({tweetObject, isOwner, userObject, refreshTweet, myTweets}) => {
   return (
     <div className="tweet">
       <img className="profile_img" src={userObject.photoURL} width="42" height="42" />
-      {editing ? <><form onSubmit={onSubmitEdit}><input type="text" onChange={onChangeEdit} value={newTweet} required /><input type="submit" value="update tweet" /><button onClick={toggleEditing}>cancel</button></form></> :
+      {editing ? <>
+      <div className="wrap_tweet_text">
+      <div className="nickname">{userObject.displayName}</div>
+      <form className="form_tweet_edit" onSubmit={onSubmitEdit}><input className="input_text_edit" type="text" onChange={onChangeEdit} value={newTweet} required /><input className="input_submit_edit" type="submit" value="update tweet" /><button className="input_cancel_edit" onClick={toggleEditing}>cancel</button></form></div></> :
       <div className="wrap_tweet_text">
         <div className="wrap_title">
       <div className="nickname">{userObject.displayName}</div>

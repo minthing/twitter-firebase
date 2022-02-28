@@ -23,6 +23,7 @@ const TweetFactory = ({userObject}) => {
         likedId:[],
         createUser:userObject.uid,
         nickname: userObject.displayName,
+        userProfile:userObject.photoURL,
         fileUrl
       }
       await dbService.collection("tweets").add(innerData);

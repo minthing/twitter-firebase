@@ -14,7 +14,7 @@ function App() {
         // userData.forEach(document => console.log(document.data()))
         // // console.log(userData.data())
         setUserObject({
-          displayName: user.displayName,
+          displayName: user.displayName ? user.displayName : `unknown_${Math.floor(Math.random()*100000)}`,
           photoURL: user.photoURL ? user.photoURL : "https://firebasestorage.googleapis.com/v0/b/twitter-firebase-4b55c.appspot.com/o/6uceNcllUwhk42n9N71mMOfiWx72%2FdefaultImages%2Fnoun_user.png?alt=media&token=6b0d9ac2-e578-422f-87db-cfcd0d2d1c83",
           uid: user.uid,
           likedData : [],

@@ -20,6 +20,7 @@ function App() {
           likedData : [],
           updateProfile: (args) => user.updateProfile(args),
         });
+        await dbService.collection(`profile`).doc(user.uid).set({displayName: user.displayName, photoURL:user.photoURL});
         const getLikeData = await dbService.collection("like").get();
         let isFirstLogin = true;
         getLikeData.forEach(element => {
@@ -38,7 +39,7 @@ function App() {
   }, []);
   // 왜 userObject의 이름이 바로 반영되지 않는가. -> Profile에서 firebase 로직으로 불러온 displayName은 firebase에 연결이 되어 있지만
   // userObject.displayName은 react.js 데이터 이기 때문임. 다른 연결 방법이 필요함. 
-  const refreshUser = () => {
+  const refreshUser = async () => {
     const user = authService.currentUser;
     setUserObject({
       displayName: user.displayName,
@@ -47,6 +48,7 @@ function App() {
       likedData : [],
       updateProfile: (args) => user.updateProfile(args),
     });
+    await dbService.doc(`profile/${userObject.uid}`).update({displayName: user.displayName, photoURL:user.photoURL});
   }
   // console.log(authService.currentUser)
   // setInterval(() => {

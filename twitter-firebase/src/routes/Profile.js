@@ -7,14 +7,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faImage } from '@fortawesome/free-solid-svg-icons'
 
 export default ({userObject, refreshUser}) => {
-  // console.log(userObject)
+  console.log(userObject)
   const defaultImage = "https://firebasestorage.googleapis.com/v0/b/twitter-firebase-4b55c.appspot.com/o/6uceNcllUwhk42n9N71mMOfiWx72%2FdefaultImages%2Fnoun_user.png?alt=media&token=6b0d9ac2-e578-422f-87db-cfcd0d2d1c83"
   // 이미 있는 내용이니까 빈 칸이 아니라 userObject에서 가져오는 게 맞겠구나...
   const [nickname, setNickname] = useState(userObject.displayName);
   const [myTweets, setMyTweets] = useState([]);
   const [likedTweets, setLikedTweets] = useState([]);
   const history = useHistory();
-  const [profileImage, setProfileImage] = useState(userObject.photoURL ? userObject.photoURL : defaultImage)
+  const [profileImage, setProfileImage] = useState(userObject.photoURL)
   const onLogOutClick = () => {
     authService.signOut();
     history.push("/");
@@ -107,16 +107,16 @@ export default ({userObject, refreshUser}) => {
     event.preventDefault();
     let fileUrl = userObject.profileImage;
       // displayName & photoUrl을 바꿀 수 있음
-      if(profileImage !== defaultImage){
-        const fileReference = storageService.ref().child(`${userObject.uid}/profile_image`);
-        const response = await fileReference.putString(profileImage, "data_url");
-        fileUrl = await response.ref.getDownloadURL();
-      }else{
-        fileUrl = defaultImage
+      const fileReference = storageService.ref().child(`${userObject.uid}/profile_image`);
+      const response = await fileReference.putString(profileImage, "data_url");
+      fileUrl = await response.ref.getDownloadURL();
+      if(fileUrl){
+        await userObject.updateProfile({
+          photoURL: fileUrl
+        });
       }
       await userObject.updateProfile({
         displayName: nickname,
-        photoUrl: fileUrl
       });
       refreshUser();
   }

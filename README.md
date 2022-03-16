@@ -1,3 +1,6 @@
+### deploy
+https://wonderful-wozniak-768bf9.netlify.app/#/
+
 ### setting
 * 리엑트 앱 만들기 : `npx create-react-app twitter-firebase`
 * firebase : 실습을 용이하게 하기 위해 `npm install firebase@8.10.0`으로 설치
